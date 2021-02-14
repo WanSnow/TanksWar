@@ -6,3 +6,7 @@ type Scope struct {
 	vision    int //视野
 	distance  int //视野距离
 }
+
+type ScopeFunc interface {
+	directionCalibration(direction int) //方向校准
+}
