@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package protocol;
+
+message ServerProtocol {
+    string group_id = 1;//组id
+    string account_id = 2; //用户id
+    string protocol_id = 3; //协议选择
+
+    GamingProtocol gamingProtocol = 4;//游戏中服务协议
+    StartAndEndProtocol startAndEndProtocol = 5;//比赛的开始和结束
+    TanksInfo tanksInfo = 6;//比赛开始的坦克信息传递
+    FirstRequest first=7;//首次发送数据给计算服务器
+}
+
+message Point{
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message StartAndEndProtocol {
+  int32 live = 1; //用户存亡
+}
+
+/*
+游戏中指令
+ */
+message GamingProtocol {
+  int32 code = 1; //指令代码，包含移动，开炮等指令，掩码形式
+  int32 steps = 2; //步数
+  Point old_point = 3; //旧坐标
+  Point new_Point = 5; //新坐标
+  int32 scope_dir = 7; //视镜方向
+  int32 weapon_dir = 8; //炮筒方向
+  int32 tank_dir = 9; //坦克方向
+}
+
+/*
+第一次指令
+传递坦克信息
+ */
+message FirstRequest{
+    //装甲
+    int32 tank_l = 1;//第一次请求时给坦克的边长（正方形） 默认是100
+    int32 defence = 2;//第一次请求时给坦克防御力 默认是0 坦克减少血量=炮弹伤害-坦克防御力
+    //炮筒&子弹
+    int32 bullet_len = 3; //第一次请求,子弹射程
+    int32 bullet_r = 4; //第一次请求,子弹爆炸的伤害圈半径
+    int32 bullet_bloods = 5; //第一次请求,子弹爆炸的伤害圈值，掉多少血
+    //视镜
+    int32 scope_angle = 6;//第一次请求,视镜广角，60,70.。。。。就是扇形视角，是角度
+    int32 scope_len = 7;//第一次请求,视镜可视的最远距离
+    //履带
+    int32 wheel_rate = 8;//第一次请求，坦克移动速度
+
+    int32 num = 9; //第一次请求,比赛人数
+}
+
+/*
+坦克参数
+ */
+message TanksInfo {
+  int32 engine = 1; //引擎
+  int32 weapon = 2; //炮筒
+  int32 scope = 3; //视镜
+  int32 armor = 4; //装甲
+  int32 bullet = 5; //子弹
+  //待定
+}
+
+/*
+计算服务器返回参数
+ */
+message ReturnMessage{
+    repeated Point tank_Point=1;//可选，可能只要tank_live一个字段,目标坦克列表
+    repeated Point bullet_Point=2;//可选，目标炮弹列表
+    bool tank_live=3;//可选，是否还活着，当此字段选上时一定是false，其他字段无效，即只有组id+用户名+它死了
+    Point point=4;//可选，实际可以更新到的位置
+}
+//实时更新稍后考虑
