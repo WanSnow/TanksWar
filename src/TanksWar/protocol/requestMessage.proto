@@ -27,7 +27,6 @@ message StartAndEndProtocol {
  */
 message GamingProtocol {
   int32 code = 1; //指令代码，包含移动，开炮等指令，掩码形式
-  int32 steps = 2; //步数
   Point old_point = 3; //旧坐标
   Point new_Point = 5; //新坐标
   int32 scope_dir = 7; //视镜方向
