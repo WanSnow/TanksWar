@@ -3,7 +3,10 @@ package tankLib
 import . "TanksWar/tankLib/implement"
 
 type Tank struct {
+	tankID string
+
 	hp int //生命值
+	//direction int //存入redis
 
 	engine Engine
 	armor  Armor
@@ -13,8 +16,9 @@ type Tank struct {
 	bullet Bullet
 }
 
-func TankFactory(engine int, armor int, weapon int, scope int, wheel int, bullet int) Tank {
+func TankFactory(id string, engine int, armor int, weapon int, scope int, wheel int, bullet int) Tank {
 	tank := Tank{}
+	tank.tankID = id
 	tank.hp = 100
 	tank.engine = EngineFactory(engine)
 	tank.armor = ArmorFactory(armor)

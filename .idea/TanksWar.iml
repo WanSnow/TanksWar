@@ -4,6 +4,8 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/pkg/mod/github.com" />
       <excludeFolder url="file://$MODULE_DIR$/pkg/mod/google.golang.org" />
+      <excludeFolder url="file://$MODULE_DIR$/pkg/mod/golang.org" />
+      <excludeFolder url="file://$MODULE_DIR$/pkg" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
