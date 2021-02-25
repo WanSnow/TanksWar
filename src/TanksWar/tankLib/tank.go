@@ -1,6 +1,8 @@
 package tankLib
 
-import . "TanksWar/tankLib/implement"
+import (
+	. "TanksWar/tankLib/model/parts"
+)
 
 type Tank struct {
 	tankID string
@@ -31,6 +33,26 @@ func TankFactory(id string, engine int, armor int, weapon int, scope int, wheel 
 }
 
 type TankFunc interface {
-	execute(command string, args ...int)
-	trigger(command string, args ...int)
+	Run()
+	Execute(command string, args ...int)
+	Trigger(command string, args ...int)
+}
+
+/*
+todo 坦克中断操作
+*/
+func (tank Tank) Trigger() {
+
+}
+
+func (tank Tank) Run() {
+	engineCooling := tank.engine.EngineCooling() //引擎冷却计时
+loop:
+	for tank.hp > 0 {
+		if true { //todo 坦克的中断触发
+			break loop
+		} else if engineCooling() {
+			tank.engine.CycleInstruction()
+		}
+	}
 }
